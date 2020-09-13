@@ -20,11 +20,11 @@ echo find -h /root/test/links/list_slink | wc -l
 
 wc -l /root/test/list >> list_hlink
 
-cmp -s /root/test/links/list_hlink /root/test/links/list_slink && echo "Yes"
+cmp -s /root/test/links/list_hlink /root/test/links/list_slink && echo "Yes" || echo "No"
 
 mv /root/test/list /root/test/list1
 
-cmp -s /root/test/links/list_hlink /root/test/links/list_slink && echo "Yes"
+cmp -s /root/test/links/list_hlink /root/test/links/list_slink && echo "Yes" || echo "No"
 
 ln /root/test/list /root/list_hlink_in_root  
 
@@ -48,7 +48,7 @@ mv /root/man_part* /root/test/man.dir
 
 cat /root/test/man.dir/man_part* > /root/test/man.dir/man.txt
 
-cmp -s /root/man.txt /root/test/man.dir/man.txt && echo "Yes"
+cmp -s /root/man.txt /root/test/man.dir/man.txt && echo "Yes" || "No"
 
 echo "1st string\n 2nd string" > newfile
 cat /root/man.txt >> newfile
