@@ -1,0 +1,81 @@
+1)
+fdisk /dev/sda
+	n
+	number: enter
+	first sector: enter
+	+300M
+	w
+
+2)
+blkid -o value /dev/sda1 | head -1 >> uuid.txt
+
+3)
+mkfs.ext4 -b 4096 /dev/sda3
+	y
+
+4)
+dumpe2fs /dev/sda3
+
+5)
+tune2fs -c 2 -i 2m /dev/sda3
+
+6)
+mkdir /mnt/newdisk
+mount -t ext4 /dev/sda3 /mnt/newdisk
+
+7)
+ln -s /mnt/newdisk newdisk_link
+
+8)
+mkdir /mnt/newdisk/dir
+
+9)
+/etc/fstab
+	/dev/sda3 /mnt/newdisk ext4 rw,noexec,noatime,nouser,dev,suid,async  0 0
+
+10)
+umount /dev/sda3
+fdisk /dev/sda
+	d
+	3 
+	n
+	3
+	+350M (new size)
+	N  (do not remove filesystem signature)
+
+resize2fs -p /dev/sda3 350M
+
+11)
+e2fsck -n /dev/sda3
+
+12)
+mke2fs -O journal_dev /dev/sda4
+tune2fs -O ^has_journal /dev/sda3
+tune2fs -J device=/dev/sda4 /dev/sda3
+
+13)
+fdisk /dev/sda
+	n
+	number: enter
+	first sector: enter
+	+100M
+	w
+
+14)
+mkdir /mnt/newdisk_lvm
+vgcreate vg1 /dev/sda5 /dev/sda6
+lvcreate -l 100%FREE -n lv1 vg1
+mkfs.ext4 -b 4096 /dev/vg1/lv1
+mount /dev/vg1/lv1 /mnt/newdisk_lvm
+
+15)
+mkdir /mnt/share
+mount.cifs //10.0.0.212/_share /mnt/share -o user=guest,domain=WORKGROUP
+
+16)
+/root/.smbclient
+	username=guest
+	password=
+	domain=WORKGROUP
+/etc/fstab
+	//10.0.0.212/_share /mnt/share cifs user,ro,credentials=/root/.smbclient 0 0
