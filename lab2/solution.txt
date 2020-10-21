@@ -80,3 +80,9 @@ mount.cifs //10.0.0.212/share /mnt/share -o guest
 	domain=WORKGROUP
 /etc/fstab
 	//10.0.0.212/_share /mnt/share cifs user,ro,credentials=/root/.smbclient 0 0
+
+
+
+**************************************************************************************
+
+parted -a optimal /dev/usb mkpart primary 0% 300MB
