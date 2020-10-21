@@ -7,7 +7,7 @@ fdisk /dev/sda
 	w
 
 2)
-blkid -o value /dev/sda1 | head -1 >> uuid.txt
+blkid -o value /dev/sda | head -1 >> uuid.txt
 
 3)
 mkfs.ext4 -b 4096 /dev/sda3
@@ -47,6 +47,7 @@ resize2fs -p /dev/sda3 350M
 
 11)
 e2fsck -n /dev/sda3
+badblocks -v /dev/sda3
 
 12)
 mke2fs -O journal_dev /dev/sda4
@@ -70,7 +71,7 @@ mount /dev/vg1/lv1 /mnt/newdisk_lvm
 
 15)
 mkdir /mnt/share
-mount.cifs //10.0.0.212/_share /mnt/share -o user=guest,domain=WORKGROUP
+mount.cifs //10.0.0.212/share /mnt/share -o guest
 
 16)
 /root/.smbclient
