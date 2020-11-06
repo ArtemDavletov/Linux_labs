@@ -56,8 +56,7 @@ mkdir /root/test14 | chown u1:u1 /root/test14 | chmod +t /root/test14
 
 # 16) копирует в каталог test14 исполняемый файл редактора nano и делает так, чтобы любой
 # пользователь смог изменять с его помощью файлы, созданные в пункте 13;
-mkdir /root/test14 | chown u1:u1 /root/test14 | chmod +t /root/test14 | cp /bin/nano /root/test14/nano |
-chown u1:u1 /root/test14/nano | chmod u+s /root/test14/nano
+cp /bin/nano /root/test14/nano | chown u1:u1 /root/test14/nano | chmod u+s /root/test14/nano
 
 # 17) создает каталог test15 и создает в нем текстовый файл /test15/secret_file. Делает так, чтобы
 # содержимое этого файла можно было вывести на экран, используя полный путь, но чтобы узнать
