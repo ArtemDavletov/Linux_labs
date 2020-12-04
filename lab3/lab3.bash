@@ -61,4 +61,5 @@ cp /bin/nano /root/test14/nano | chown u1:u1 /root/test14/nano | chmod u+s /root
 # 17) создает каталог test15 и создает в нем текстовый файл /test15/secret_file. Делает так, чтобы
 # содержимое этого файла можно было вывести на экран, используя полный путь, но чтобы узнать
 # имя этого файла, было бы невозможно.
-mkdir test15 | echo Hello world > test15/secret_file | chmod 444 test15/secret_file | chmod 111 test15
+mkdir test15 
+touch test15/secret_file | echo Hello world > test15/secret_file | chmod 444 test15/secret_file | chmod 111 test15
