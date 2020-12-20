@@ -76,13 +76,21 @@ rpm fortunes-ru_1.52-3_all.noarch.rpm
 # 9) Скачайте из сетевого репозитория пакет nano. Пересоберите пакет таким образом, чтобы после его
 # установки менеджером пакетов, появлялась возможность запустить редактор nano из любого каталога,
 # введя команду newnano.
-yumdownloader --source nano
+dnf download nano
 
-rpm -iv nano-2.3.1-10.e17.src.rpm 
 cd rpmbuild/SPECS
 nano nano.spec 
-# добавляем строчку
-# ln -s "nano" "%{buildroot}/%{_bindir}/newnano"
-yum install groff
+
+sudo yum config-manager --set-enabled PowerTools
+yum groupinstall "Development tools"
+
+# добавляем строчку в %install:
+# $install
+# cd build
+# ln -s "nano" "%{_bindir}/newnano" <- добавляем эту строчку
+
+yum-builddep nano.spec
 rpmbuild -bb nano.spec 
-yum localinstall RPMS/x86_64/nano-2.3.1-10.e17.rpm 
+cd ../RPMS/x86_64
+yum localinstall nano-2.3.1-10.e17.rpm 
+
