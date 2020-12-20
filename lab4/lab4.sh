@@ -81,16 +81,16 @@ dnf download nano
 cd rpmbuild/SPECS
 nano nano.spec 
 
-sudo yum config-manager --set-enabled PowerTools
-yum groupinstall "Development tools"
-
 # добавляем строчку в %install:
 # $install
 # cd build
 # ln -s "nano" "%{_bindir}/newnano" <- добавляем эту строчку
 
+sudo yum config-manager --set-enabled PowerTools
+yum groupinstall "Development tools"
+
 yum-builddep nano.spec
 rpmbuild -bb nano.spec 
+
 cd ../RPMS/x86_64
 yum localinstall nano-2.3.1-10.e17.rpm 
-
